@@ -14,13 +14,20 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(5a6d43b2-9f40-49be-84eb-7529f6d29033)'
+    KeyVaultName: 'test-avn'
+    SecretsFilter: '*'
+    RunAsPreJob: false
+  
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
-- bash: echo This script could use $SYSTEM_ACCESSTOKEN
-  env:
-    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+# - bash: echo This script could use $SYSTEM_ACCESSTOKEN
+#   env:
+#     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 - powershell: | 
-    Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
-    Write-Host "$env:SYSTEM_ACCESSTOKEN = $(System.AccessToken)"
-  env:
-    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    Write-Host "This is a script that could use mysecretpassword"
+    Write-Host "mysecretpassword = $(mysecretpassword)"
+  # env:
+  #   SYSTEM_ACCESSTOKEN: $(System.AccessToken)
