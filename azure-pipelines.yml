@@ -14,5 +14,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+- bash: echo This script could use $SYSTEM_ACCESSTOKEN
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+- powershell: | 
+    Write-Host "This is a script that could use $env:SYSTEM_ACCESSTOKEN"
+    Write-Host "$env:SYSTEM_ACCESSTOKEN = $(System.AccessToken)"
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
